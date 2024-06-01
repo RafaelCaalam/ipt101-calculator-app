@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Calculator</title>
+    <style>
+        body {
+            background-color: #373737;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .Calculator {
+            background-color: black;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: white;
+        }
+        #result {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: right;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .num_btn, .cl {
+            padding: 15px;
+            border: 1px solid black;
+            text-align: center;
+            flex: 1 1 calc(25% - 10px);
+            box-sizing: border-box;
+            background-color: gray;
+            color: rgb(202, 204, 201);
+            font-size: medium;
+            border-radius: 5px;
+        }
+        .num_btn:active, .cl:active {
+            background-color: darkgray;
+        }
+        @media (max-width: 600px) {
+            .num_btn, .cl {
+                flex: 1 1 calc(33.33% - 10px);
+            }
+        }
+        @media (max-width: 400px) {
+            .num_btn, .cl {
+                flex: 1 1 calc(50% - 10px);
+            }
+            #result {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="Calculator">
+        <h1>Calculator</h1>
+        <input type="text" id="result" disabled>
+        <div class="button-container">
+            
+            <button class="num_btn" onclick="appendNumber(1)">1</button>
+            <button class="num_btn" onclick="appendNumber(2)">2</button>
+            <button class="num_btn" onclick="appendNumber(3)">3</button>
+            <button class="num_btn" onclick="sub()">-</button>
+            <button class="num_btn" onclick="appendNumber(4)">4</button>
+            <button class="num_btn" onclick="appendNumber(5)">5</button>
+            <button class="num_btn" onclick="appendNumber(6)">6</button>
+            <button class="num_btn" onclick="division()">/</button>
+            <button class="num_btn" onclick="appendNumber(7)">7</button>
+            <button class="num_btn" onclick="appendNumber(8)">8</button>
+            <button class="num_btn" onclick="appendNumber(9)">9</button>
+            <button class="num_btn" onclick="multiply()">*</button>
+            <button class="num_btn" onclick="appendNumber(0)">0</button>
+            <button class="num_btn">.</button>
+            <button class="num_btn" onclick="calculate()">=</button>
+            <button class="num_btn" onclick="add()">+</button>
+            <button class="num_btn" onclick="backspace()">⌫</button>
+            <button class="cl" onclick="clearInput()">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+        let currentOperator = '';
+
+        function appendNumber(number) {
+            currentInput += number;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function clearInput() {
+            currentInput = '';
+            currentOperator = '';
+            document.getElementById('result').value = '';
+        }
+
+        function division() {
+            currentOperator = '/';
+            currentInput += currentOperator;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function multiply() {
+            currentOperator = '*';
+            currentInput += currentOperator;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function add() {
+            currentOperator = '+';
+            currentInput += currentOperator;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function sub() {
+            currentOperator = '-';
+            currentInput += currentOperator;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function calculate() {
+            try {
+                const result = eval(currentInput);
+                document.getElementById('result').value = result;
+                currentOperator = null;
+                currentInput = result.toString();
+            } catch (error) {
+                document.getElementById('result').value = 'Error';
+            }
+        }
+
+        function backspace() {
+            currentInput = currentInput.slice(0, -1);
+            document.getElementById('result').value = currentInput;
+        }
+    </script>
+
+</body>
+</html>
